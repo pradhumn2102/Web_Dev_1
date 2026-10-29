@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 20px;
+            color: black;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #777;
+            padding: 7px;
+        }
+
+        .heading {
+            background: #f7bd88;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .navigation {
+            background: #fbe5d6;
+            text-align: center;
+        }
+
+        .navigation a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .navigation a:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .branches {
+            width: 15%;
+            vertical-align: top;
+        }
+
+        .branches a {
+            display: block;
+            text-decoration: none;
+            color: black;
+            margin: 12px 0;
+        }
+
+        .branches a:hover {
+            color: blue;
+        }
+
+        .main-content {
+            height: 280px;
+            vertical-align: middle;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .form-area {
+            width: 330px;
+            margin: 25px auto;
+        }
+
+        .form-area h3 {
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 12px 0;
+            gap: 12px;
+        }
+
+        input {
+            padding: 5px;
+            border: 2px solid #444;
+        }
+
+        .form-row input {
+            width: 160px;
+        }
+
+        button {
+            padding: 7px 18px;
+            cursor: pointer;
+            background: white;
+            border: 2px solid #777;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .book-cover {
+            width: 85px;
+            height: 105px;
+            border: 2px solid #555;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            padding: 5px;
+            margin: auto;
+        }
+
+        .cover-one {
+            background: linear-gradient(140deg, #e8a52d, #a52d16, #253f1b);
+        }
+
+        .cover-two {
+            background: linear-gradient(140deg, #6b9876, #153c32, #172c23);
+        }
+
+        .cover-three {
+            background: linear-gradient(140deg, #337ca2, #152f64, #101820);
+        }
+
+        .book-table th {
+            background: #fbe5d6;
+        }
+
+        .book-table td {
+            vertical-align: middle;
+        }
+
+        .book-table .heading {
+            background: #f7bd88;
+        }
+
+        .add-cart {
+            background: #f7bd88;
+            border: 1px solid #777;
+            padding: 6px 9px;
+        }
+
+        .notice {
+            background: #fbe5d6;
+            padding: 10px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                margin: 5px;
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 4px;
+            }
+
+            .form-area {
+                width: 95%;
+            }
+
+            .book-cover {
+                width: 55px;
+                height: 75px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<table>
+    <!-- Website heading -->
+    <tr>
+        <th class="heading" style="width:15%">Logo</th>
+        <th class="heading" colspan="4">Web Site Name</th>
+    </tr>
+
+    <!-- Navigation -->
+    <tr class="navigation">
+        <td><a href="#home" onclick="showPage('home')">Home</a></td>
+        <td><a href="#login" onclick="showPage('login')">Login</a></td>
+        <td><a href="#registration" onclick="showPage('registration')">Registration</a></td>
+        <td><a href="#catalogue" onclick="showPage('catalogue')">Catalogue</a></td>
+        <td><a href="#cart" onclick="showPage('cart')">Cart (<span id="cart-count">0</span>)</a></td>
+    </tr>
+
+    <tr>
+        <!-- Left branch menu -->
+        <td class="branches">
+            <a href="#catalogue" onclick="showPage('catalogue')">CSE</a>
+            <a href="#catalogue" onclick="showPage('catalogue')">ECE</a>
+            <a href="#catalogue" onclick="showPage('catalogue')">EEE</a>
+            <a href="#catalogue" onclick="showPage('catalogue')">CIVIL</a>
+        </td>
+
+        <!-- Right content area -->
+        <td colspan="4" class="main-content">
+
+            <!-- HOME PAGE -->
+            <section id="home" class="page active">
+                <h3 style="text-align:center">
+                    Description of the Website
+                </h3>
+
+                <p style="text-align:center">
+                    Welcome to our Online Bookstore.
+                </p>
+
+                <p style="text-align:center">
+                    Browse books, view their details and add
+                    your favourite books to the cart.
+                </p>
+            </section>
+
+            <!-- LOGIN PAGE -->
+            <section id="login" class="page">
+                <div class="form-area">
+                    <h3>Login Page</h3>
+
+                    <form onsubmit="loginUser(event)">
+                        <div class="form-row">
+                            <label for="username">User Name:</label>
+                            <input id="username" type="text"
+                                   required>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="password">Password:</label>
+                            <input id="password" type="password"
+                                   required>
+                        </div>
+
+                        <div class="actions">
+                            <button type="submit">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+                    </form>
+
+                    <p id="login-message"
+                       style="text-align:center"></p>
+                </div>
+            </section>
+
+            <!-- REGISTRATION PAGE -->
+            <section id="registration" class="page">
+                <div class="form-area">
+                    <h3>Registration Page</h3>
+
+                    <form onsubmit="registerUser(event)">
+                        <div class="form-row">
+                            <label for="reg-name">Name:</label>
+                            <input id="reg-name" type="text"
+                                   required>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="reg-email">Email:</label>
+                            <input id="reg-email" type="email"
+                                   required>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="reg-password">Password:</label>
+                            <input id="reg-password"
+                                   type="password" required>
+                        </div>
+
+                        <div class="actions">
+                            <button type="submit">Register</button>
+                            <button type="reset">Reset</button>
+                        </div>
+                    </form>
+
+                    <p id="reg-message"
+                       style="text-align:center"></p>
+                </div>
+            </section>
+
+            <!-- CATALOGUE PAGE -->
+            <section id="catalogue" class="page">
+                <h3 style="text-align:center">Book Catalogue</h3>
+
+                <table class="book-table">
+                    <tr class="heading">
+                        <th>Cover</th>
+                        <th>Book Details</th>
+                        <th>Price</th>
+                        <th>Cart</th>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="book-cover cover-one">
+                                XML Bible
+                            </div>
+                        </td>
+
+                        <td>
+                            Book: XML Bible<br>
+                            Author: Winston<br>
+                            Publication: Wiley
+                        </td>
+
+                        <td>$40.5</td>
+
+                        <td>
+                            <button class="add-cart"
+                                onclick="addToCart('XML Bible', 40.5)">
+                                Add to cart
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="book-cover cover-two">
+                                AI
+                            </div>
+                        </td>
+
+                        <td>
+                            Book: AI<br>
+                            Author: S. Russell<br>
+                            Publication: Prentice Hall
+                        </td>
+
+                        <td>$63</td>
+
+                        <td>
+                            <button class="add-cart"
+                                onclick="addToCart('AI', 63)">
+                                Add to cart
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="book-cover cover-three">
+                                Java
+                            </div>
+                        </td>
+
+                        <td>
+                            Book: Java Programming<br>
+                            Author: Herbert Schildt<br>
+                            Publication: McGraw Hill
+                        </td>
+
+                        <td>$45</td>
+
+                        <td>
+                            <button class="add-cart"
+                                onclick="addToCart('Java Programming', 45)">
+                                Add to cart
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- CART PAGE -->
+            <section id="cart" class="page">
+                <h3 style="text-align:center">Shopping Cart</h3>
+
+                <table class="book-table">
+                    <thead>
+                        <tr class="heading">
+                            <th>Book Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="cart-items">
+                        <tr>
+                            <td colspan="3" style="text-align:center">
+                                Your cart is empty.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="text-align:right">
+                    Total: $<span id="cart-total">0.00</span>
+                </h3>
+            </section>
+
+        </td>
+    </tr>
+</table>
+
+<script>
+    // Show the selected page
+    function showPage(pageId) {
+        document.querySelectorAll(".page").forEach(function(page) {
+            page.classList.remove("active");
+        });
+
+        document.getElementById(pageId).classList.add("active");
+    }
+
+    // Demo login form
+    function loginUser(event) {
+        event.preventDefault();
+
+        const username =
+            document.getElementById("username").value;
+
+        document.getElementById("login-message").textContent =
+            "Welcome, " + username + "! Demo login submitted.";
+    }
+
+    // Demo registration form
+    function registerUser(event) {
+        event.preventDefault();
+
+        document.getElementById("reg-message").textContent =
+            "Registration form submitted successfully!";
+    }
+
+    // Shopping cart
+    const cart = [];
+
+    function addToCart(name, price) {
+        cart.push({ name: name, price: price });
+        updateCart();
+
+        alert(name + " added to cart!");
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartItems = document.getElementById("cart-items");
+        const cartCount = document.getElementById("cart-count");
+        const cartTotal = document.getElementById("cart-total");
+
+        cartCount.textContent = cart.length;
+
+        if (cart.length === 0) {
+            cartItems.innerHTML =
+                '<tr><td colspan="3" style="text-align:center">' +
+                'Your cart is empty.</td></tr>';
+
+            cartTotal.textContent = "0.00";
+            return;
+        }
+
+        cartItems.innerHTML = "";
+
+        let total = 0;
+
+        cart.forEach(function(book, index) {
+            total += book.price;
+
+            const row = document.createElement("tr");
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = book.name;
+
+            const priceCell = document.createElement("td");
+            priceCell.textContent = "$" + book.price.toFixed(2);
+
+            const actionCell = document.createElement("td");
+            const removeButton = document.createElement("button");
+
+            removeButton.textContent = "Remove";
+            removeButton.onclick = function() {
+                removeFromCart(index);
+            };
+
+            actionCell.appendChild(removeButton);
+
+            row.appendChild(nameCell);
+            row.appendChild(priceCell);
+            row.appendChild(actionCell);
+
+            cartItems.appendChild(row);
+        });
+
+        cartTotal.textContent = total.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
+
